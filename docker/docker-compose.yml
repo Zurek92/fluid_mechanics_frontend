@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+    api:
+        build:
+            context: ../../fluid_mechanics_api/
+            dockerfile: docker/Dockerfile
+        image: fluid_mechanics_api:develop
+        volumes:
+            - ../../fluid_mechanics_api/:/project
+        ports:
+            - "12000:12000"
+        working_dir: /project
+        command: gunicorn -c gunicorn.conf main:app
+    frontend:
+        build:
+            context: ../
+            dockerfile: docker/Dockerfile
+        image: fluid_mechanics_frontend:develop
+        volumes:
+            - ../:/project
+        ports:
+            - "13000:80"
