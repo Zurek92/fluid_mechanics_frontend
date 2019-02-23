@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fluid Mechanics - headloss</title>
+    <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
+    <script src="scripts/config.js"></script>
+</head>
+<body>
+    <form>
+        <select id="calcMode">
+            <option value="" hidden>Choose here</option>
+            <option>Known flow</option>
+            <option>Known power</option>
+        </select>
+    </form>
+    <form id="optionsForm">
+    </form>
+    <script src="scripts/form_options.js"></script>
+    <script src="scripts/fetch_scripts.js"></script>
+    <script>
+        calcMode.addEventListener("change", () => {
+            if (calcMode.value == "Known flow") {
+                optionsForm.innerHTML = generateHeadlossFlowForm();
+                document.querySelector("form > button").addEventListener("click", () => {
+                    fetchData("calculate/headloss", getHeadlossFlowData())
+                });
+            } else {
+                optionsForm.innerHTML = generateHeadlossPowerForm();
+                document.querySelector("form > button").addEventListener("click", () => {
+                    fetchData("calculate/headloss", getHeadlossPowerData())
+                });
+            }
+        })
+    </script>
+</body>
+</html>
