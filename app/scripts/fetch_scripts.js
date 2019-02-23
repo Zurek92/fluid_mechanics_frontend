@@ -41,6 +41,9 @@ function fetchData(url, formData) {
     })
     .then(resp => resp.json())
     .then(resp => {
-        console.log(resp);
+        results.innerHTML = `
+        headloss: ${resp['headloss']}${resp['headloss_unit']}, 
+        velocity: ${resp['velocity']}${resp['velocity_unit']}
+        `;
     })
 }
