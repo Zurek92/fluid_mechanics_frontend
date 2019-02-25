@@ -42,7 +42,7 @@ function generateHeadlossFlowForm() {
         ${generateInputOption('roughness', 'Roughness', "1.5")}
         ${generateInputOption('local_loss_coefficient', 'Local loss coefficient', "0")}
         ${generateSelectOption('headloss_unit', 'Headloss unit', headlossUnitArray)}
-        <button type="button">Calculate</button>
+        <button type="button" id="formButton">Calculate</button>
     `
 }
 
@@ -59,8 +59,16 @@ function generateHeadlossPowerForm() {
         ${generateInputOption('roughness', 'Roughness', "1.5")}
         ${generateInputOption('local_loss_coefficient', 'Local loss coefficient', "0")}
         ${generateSelectOption('headloss_unit', 'Headloss unit', headlossUnitArray)}
-        <button type="button">Calculate</button>
+        <button type="button" id="formButton">Calculate</button>
     `
+}
+
+function buttonDisable() {
+    formButton.innerHTML = "Waiting";
+}
+
+function buttonEnable() {
+    formButton.innerHTML = "Calculate";
 }
 
 calcMode.value = "";

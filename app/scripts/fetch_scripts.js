@@ -31,6 +31,10 @@ function getHeadlossPowerData() {
 
 
 function fetchData(url, formData) {
+    if (formButton.innerHTML != "Calculate") {
+        return 0
+    }
+    buttonDisable();
     fetch(`${base_api_url}/${url}`, {
         method: 'POST',
         headers: {
@@ -46,4 +50,5 @@ function fetchData(url, formData) {
         velocity: ${resp['velocity']}${resp['velocity_unit']}
         `;
     })
+    .then(() => buttonEnable())
 }
