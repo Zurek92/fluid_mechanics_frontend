@@ -43,7 +43,7 @@ selectLanguage.addEventListener("change", () => {
         cookieLangValue = "pl";
     }
     document.cookie = `userLanguage=${cookieLangValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-    userLanguage = document.cookie.split("userLanguage=")[1].split(";")[0];
+    userLanguage = getUserCookieLanguage();
     location.reload();
 })
 
