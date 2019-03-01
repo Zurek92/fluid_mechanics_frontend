@@ -1,3 +1,7 @@
+body {
+    background-color: grey;
+}
+
 a {
     display: block;
 }
@@ -7,7 +11,7 @@ select, input {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: block;
-    width: 150px;
+    width: 180px;
     padding: 2px;
     border: 1px solid black;
     border-radius: 3px;
@@ -17,4 +21,10 @@ select, input {
 .formInputTitle {
     font-size: 12px;
     font-family: sans-serif;
+}
+
+.errorMessage {
+    width: 180px;
+    font-size: 12px;
+    color: #dd0000;
 }
