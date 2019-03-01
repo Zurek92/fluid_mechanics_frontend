@@ -56,14 +56,20 @@ function generateHeadlossPowerForm() {
     return `
         ${generateSelectOption('fluid', "Fluid", getTranslatedSentence("fluidsArrays"))}
         ${generateInputOption('temperature_supply', "TemperatureSupply", "")}
+        <div id="errorTemperatureSupply" class="errorMessage"></div>
         ${generateInputOption('temperature_return', "TemperatureReturn", "")}
+        <div id="errorTemperatureReturn" class="errorMessage"></div>
         ${generateSelectOption('material', "Material", getTranslatedSentence("materialsArrays"))}
         ${generateSelectOption('nominal_diameter', "NominalDiameter", nominalDiameterArray)}
         ${generateInputOption('power', "Power", "")}
+        <div id="errorPower" class="errorMessage"></div>
         ${generateSelectOption('power_unit', "PowerUnit", powerUnitArray)}
         ${generateInputOption('pipe_length', "PipeLength", "")}
+        <div id="errorPipeLength" class="errorMessage"></div>
         ${generateInputOption('roughness', "Roughness", "1.5")}
+        <div id="errorRoughness" class="errorMessage"></div>
         ${generateInputOption('local_loss_coefficient', "LocalLossCoefficient", "0")}
+        <div id="errorLLC" class="errorMessage"></div>
         ${generateSelectOption('headloss_unit', "HeadlossUnit", headlossUnitArray)}
         <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
     `
@@ -114,6 +120,15 @@ function validateFloatPositive(floatValue, msgKey, elem, valueMax=Infinity) {
     return 0
 }
 
+function compareTemperatureValues(temperatureSupply, temperatureReturn, msgKey, elem) {
+    if (temperatureSupply != temperatureReturn) {
+        elem.innerHTML = "";
+        return 1
+    }
+    elem.innerHTML = getTranslatedSentence(msgKey);
+    return 0
+}
+
 function validateHeadlossFlowData(formData) {
     if (
         [
@@ -129,6 +144,27 @@ function validateHeadlossFlowData(formData) {
     return 1
 }
 
+function validateHeadlossPowerData(formData) {
+    if (
+        [
+            validateIntBetween(formData["temperature_supply"], 0, 200, "wrongTemperature", errorTemperatureSupply),
+            validateIntBetween(formData["temperature_return"], 0, 200, "wrongTemperature", errorTemperatureReturn),
+            compareTemperatureValues(
+                formData["temperature_supply"], 
+                formData["temperature_return"], 
+                "wrongTemperatureCompare", 
+                errorTemperatureReturn
+            ),
+            validateFloatPositive(formData["power"], "wrongPower", errorPower),
+            validateFloatPositive(formData["roughness"], "wrongRoughness", errorRoughness, 3),
+            validateFloatPositive(formData["length"], "wrongLength", errorPipeLength),
+            validateFloatNonNegative(formData["local_loss_coefficient"], "wrongLLC", errorLLC),
+        ].includes(0)
+    ) {
+        return 0
+    }
+    return 1
+}
 
 // prepare data in json structure
 function getHeadlossFlowData() {
