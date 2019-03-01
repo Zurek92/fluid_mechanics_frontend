@@ -24,7 +24,6 @@
     <div id="results">
     </div>
     <script src="scripts/language_options.js"></script>
-    <script src="scripts/form_options.js"></script>
     <script src="scripts/fetch_scripts.js"></script>
     <script>
         createCalcModeForm();
@@ -32,12 +31,12 @@
             if (calcMode.value == getTranslatedSentence("KnownFlow")) {
                 optionsForm.innerHTML = generateHeadlossFlowForm();
                 document.querySelector("form > button").addEventListener("click", () => {
-                    fetchData("calculate/headloss", getHeadlossFlowData())
+                    fetchData("calculate/headloss", getHeadlossFlowData(), validateHeadlossFlowData)
                 });
             } else if (calcMode.value == getTranslatedSentence("KnownPower")) {
                 optionsForm.innerHTML = generateHeadlossPowerForm();
                 document.querySelector("form > button").addEventListener("click", () => {
-                    fetchData("calculate/headloss", getHeadlossPowerData())
+                    fetchData("calculate/headloss", getHeadlossPowerData(), validateHeadlossFlowData)
                 });
             }
         })
