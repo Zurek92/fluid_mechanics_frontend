@@ -32,6 +32,10 @@ const languageDictionary = {
         "eng": "Wrong temperature field! Should be integer between 0-200.",
         "pl": "Nieprawidłowa temperatura! Powinna być liczbą całkowitą pomiędzy 0 a 200."
     },
+    "wrongTemperatureCompare": {
+        "eng": "Temperature supply and return couldn't have the same values.",
+        "pl": "Wartości temperatury zasilania i powrotu nie mogą być takie same."
+    },
     "wrongFlow": {
         "eng": "Wrong flow field! Should be float higher than 0.",
         "pl": "Nieprawidłowy przepływ! Powinien być liczbą zmiennoprzecinkową większą od 0."
@@ -47,6 +51,10 @@ const languageDictionary = {
     "wrongLLC": {
         "eng": "Wrong local loss coefficient field! Should be float higher than or equal 0.",
         "pl": "Nieprawidłowy współczynnik strat miejscowych! Powinien być liczbą zmiennoprzecinkową większą lub równą 0."
+    },
+    "wrongPower": {
+        "eng": "Wrong power field! Should be float higher than 0.",
+        "pl": "Nieprawidłowa moc! Powinna być liczbą zmiennoprzecinkową większą od 0."
     },
 }
 
