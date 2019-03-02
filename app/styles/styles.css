@@ -1,9 +1,26 @@
-body {
-    background-color: grey;
+html, body {
+    background-color: #95b0d8;
+    height: 100%;
+    margin: 0px;
 }
 
 a {
     display: block;
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: #081e6a;
+}
+
+.box {
+    min-height: 100%;
+    background-color: #346fc6;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 0px 25px #172c48;
 }
 
 select, input {
@@ -17,6 +34,18 @@ select, input {
     border-radius: 3px;
     margin: 2px 2px 2px 0px;
 }
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.mainBoxes {
+    margin: 50px 10px 0px 10px;
+}
 
 .formInputTitle {
     font-size: 12px;
@@ -27,4 +56,28 @@ select, input {
     width: 180px;
     font-size: 12px;
     color: #dd0000;
+}
+
+.panel {
+    height: 40px;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    background-color: #394e6a;
+    box-shadow: 0px 2px 15px #172c48;
+    display: flex;
+    flex-direction: row;
+}
+
+.panel_centered {
+    margin-left: 15px;
+    line-height: 40px;
+}
+
+
+.panel div:last-child {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 15px;
 }

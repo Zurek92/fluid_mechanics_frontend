@@ -242,9 +242,10 @@ function fetchData(url, formData, funcValidate) {
     })
     .then(resp => resp.json())
     .then(resp => {
-        results.innerHTML = `
+        results.innerHTML += `<div>
         ${getTranslatedSentence("Headloss")}: ${resp['headloss']}${resp['headloss_unit']}, 
         ${getTranslatedSentence("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
+        </div>
         `;
     })
     .then(() => buttonEnable())
