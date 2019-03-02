@@ -1,3 +1,6 @@
+// general config
+const base_api_url = 'http://localhost:12000'
+
 // prepare forms
 const nominalDiameterArray = [8, 10, 15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150]
 const flowUnitArray = [
