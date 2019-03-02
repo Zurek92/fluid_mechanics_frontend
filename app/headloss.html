@@ -15,19 +15,7 @@
     <script src="scripts/fetch_scripts.js"></script>
     <script>
         createCalcModeForm();
-        calcMode.addEventListener("change", () => {
-            if (calcMode.value == getTranslatedSentence("KnownFlow")) {
-                optionsForm.innerHTML = generateHeadlossFlowForm();
-                document.querySelector("form > button").addEventListener("click", () => {
-                    fetchData("calculate/headloss", getHeadlossFlowData(), validateHeadlossFlowData)
-                });
-            } else if (calcMode.value == getTranslatedSentence("KnownPower")) {
-                optionsForm.innerHTML = generateHeadlossPowerForm();
-                document.querySelector("form > button").addEventListener("click", () => {
-                    fetchData("calculate/headloss", getHeadlossPowerData(), validateHeadlossPowerData)
-                });
-            }
-        })
+        headlossListeners();
     </script>
 </body>
 </html>

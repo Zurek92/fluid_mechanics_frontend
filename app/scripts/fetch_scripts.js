@@ -95,6 +95,23 @@ function createCalcModeForm() {
     calcMode.value = "";
 }
 
+// listeners
+function headlossListeners() {
+    calcMode.addEventListener("change", () => {
+        if (calcMode.value == getTranslatedSentence("KnownFlow")) {
+            optionsForm.innerHTML = generateHeadlossFlowForm();
+            document.querySelector("form > button").addEventListener("click", () => {
+                fetchData("calculate/headloss", getHeadlossFlowData(), validateHeadlossFlowData)
+            });
+        } else if (calcMode.value == getTranslatedSentence("KnownPower")) {
+            optionsForm.innerHTML = generateHeadlossPowerForm();
+            document.querySelector("form > button").addEventListener("click", () => {
+                fetchData("calculate/headloss", getHeadlossPowerData(), validateHeadlossPowerData)
+            });
+        }
+    })
+}
+
 // validations
 function validateIntBetween(intValue, intMin, intMax, msgKey, elem) {
     if (Number.isInteger(intValue) && intValue >= intMin && intValue <= intMax) {
