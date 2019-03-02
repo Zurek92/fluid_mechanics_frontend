@@ -4,6 +4,6 @@ url_elements = {
 
 let urls = "";
 for (elem in url_elements) {
-    urls += `<a href="${base_frontend_url}/${elem}">${url_elements[elem]}</a>`
+    urls += `<a href="/${elem}">${url_elements[elem]}</a>`
 }
 url_list.innerHTML = urls;
