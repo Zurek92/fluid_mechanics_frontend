@@ -56,6 +56,7 @@ const languageDictionary = {
         "eng": "Wrong power field! Should be float higher than 0.",
         "pl": "Nieprawidłowa moc! Powinna być liczbą zmiennoprzecinkową większą od 0."
     },
+    "mainPage": {"eng": "Main Page", "pl": "Strona główna"}
 }
 
 function getUserCookieLanguage() {
@@ -78,17 +79,4 @@ function getTranslatedSentence(key) {
     return languageDictionary[key][userLanguage];
 }
 
-selectLanguage.selectedIndex = getTranslatedSentence("selectedLanguage");
-
-selectLanguage.addEventListener("change", () => {
-    let cookieLangValue = ""
-    if (selectLanguage.value == "English Language") {
-        cookieLangValue = "eng";
-    } else if (selectLanguage.value == "Język Polski") {
-        cookieLangValue = "pl";
-    }
-    document.cookie = `userLanguage=${cookieLangValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-    userLanguage = getUserCookieLanguage();
-    location.reload();
-})
 
