@@ -15,7 +15,7 @@ const languageDictionary = {
     "HeadlossUnit": {"eng": "Headloss unit", "pl": "Jednostka straty ciśnienia"},
     "KnownFlow": {"eng": "Known flow", "pl": "Znany przepływ"},
     "KnownPower": {"eng": "Known power", "pl": "Znana moc"},
-    "LocalLossCoefficient": {"eng": "Local loss coefficient", "pl": "Współczynnik strat miejscowych"},
+    "LocalLossCoefficient": {"eng": "Local loss coefficient", "pl": "Wsp. strat miejscowych"},
     "Material": {"eng": "Material", "pl": "Materiał"},
     "NominalDiameter": {"eng": "Nominal diameter", "pl": "Średnica nominalna"},
     "PipeLength": {"eng": "Pipe length [m]", "pl": "Długość rury [m]"},
