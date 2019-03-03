@@ -1,5 +1,6 @@
 url_elements = {
     'headloss.html': languageDictionary["URLHeadlossPageDescr"][userLanguage],
+    'pipes.html': languageDictionary["URLPipesPageDescr"][userLanguage],
 }
 
 let urls = "";

@@ -4,10 +4,15 @@ const languageDictionary = {
         "eng": "Calculate headloss and velocity in a pipe with a chosen diameter.",
         "pl": "Obliczanie straty ciśnienia i prędkości w rurze o wybranej średnicy."
     },
+    "URLPipesPageDescr": {
+        "eng": "Selecting pipe dimension based on flow or power.",
+        "pl": "Dobór średnicy na podstawie przepływu lub mocy."
+    },
     "fluidsArrays": {"eng": ["water"], "pl": ["woda"]},
     "materialsArrays": {"eng": ["steel"], "pl": ["stal"]},
     "Calculate": {"eng": "Calculate", "pl": "Oblicz"},
-    "ChooseMode": {"eng": "Choose mode", "pl": "Wybierz rodzaj"},    
+    "ChooseMode": {"eng": "Choose mode", "pl": "Wybierz rodzaj"},
+    "Diameter": {"eng": "Diameter", "pl": "Średnica"},
     "Flow": {"eng": "Flow", "pl": "Przepływ"},
     "FlowUnit": {"eng": "Flow unit", "pl": "Jednostka przepływu"},
     "Fluid": {"eng": "Fluid", "pl": "Płyn"},

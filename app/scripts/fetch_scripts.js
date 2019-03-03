@@ -78,6 +78,38 @@ function generateHeadlossPowerForm() {
     `
 }
 
+function generatePipesFlowForm() {
+    return `
+    ${generateSelectOption('fluid', "Fluid", getTranslatedSentence("fluidsArrays"))}
+    ${generateInputOption('temperature', "Temperature", "")}
+    <div id="errorTemperature" class="errorMessage"></div>
+    ${generateSelectOption('material', "Material", getTranslatedSentence("materialsArrays"))}
+    ${generateInputOption('flow', "Flow", "")}
+    <div id="errorFlow" class="errorMessage"></div>
+    ${generateSelectOption('flow_unit', "FlowUnit", flowUnitArray)}
+    ${generateInputOption('roughness', "Roughness", "1.5")}
+    <div id="errorRoughness" class="errorMessage"></div>
+    <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+    `
+}
+
+function generatePipesPowerForm() {
+    return `
+    ${generateSelectOption('fluid', "Fluid", getTranslatedSentence("fluidsArrays"))}
+    ${generateInputOption('temperature_supply', "TemperatureSupply", "")}
+    <div id="errorTemperatureSupply" class="errorMessage"></div>
+    ${generateInputOption('temperature_return', "TemperatureReturn", "")}
+    <div id="errorTemperatureReturn" class="errorMessage"></div>
+    ${generateSelectOption('material', "Material", getTranslatedSentence("materialsArrays"))}
+    ${generateInputOption('power', "Power", "")}
+    <div id="errorPower" class="errorMessage"></div>
+    ${generateSelectOption('power_unit', "PowerUnit", powerUnitArray)}
+    ${generateInputOption('roughness', "Roughness", "1.5")}
+    <div id="errorRoughness" class="errorMessage"></div>
+    <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+    `
+}
+
 function buttonDisable() {
     formButton.innerHTML = getTranslatedSentence("Waiting");
 }
@@ -96,21 +128,31 @@ function createCalcModeForm() {
 }
 
 // listeners
-function headlossListeners() {
+function headlossListeners(
+    url,
+    flowFormFunc,
+    powerFormFunc,
+    flowData,
+    powerData,
+    validateFlow,
+    validatePower,
+    funcShowResp
+) {
     calcMode.addEventListener("change", () => {
         if (calcMode.value == getTranslatedSentence("KnownFlow")) {
-            optionsForm.innerHTML = generateHeadlossFlowForm();
+            optionsForm.innerHTML = flowFormFunc();
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData("calculate/headloss", getHeadlossFlowData(), validateHeadlossFlowData)
+                fetchData(url, flowData(), validateFlow, funcShowResp)
             });
         } else if (calcMode.value == getTranslatedSentence("KnownPower")) {
-            optionsForm.innerHTML = generateHeadlossPowerForm();
+            optionsForm.innerHTML = powerFormFunc();
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData("calculate/headloss", getHeadlossPowerData(), validateHeadlossPowerData)
+                fetchData(url, powerData(), validatePower, funcShowResp)
             });
         }
     })
 }
+
 
 // validations
 function validateIntBetween(intValue, intMin, intMax, msgKey, elem) {
@@ -186,6 +228,40 @@ function validateHeadlossPowerData(formData) {
     return 1
 }
 
+
+function validatePipesFlowData(formData) {
+    if (
+        [
+            validateIntBetween(formData["temperature"], 0, 200, "wrongTemperature", errorTemperature),
+            validateFloatPositive(formData["flow"], "wrongFlow", errorFlow),
+            validateFloatPositive(formData["roughness"], "wrongRoughness", errorRoughness, 3),
+        ].includes(0)
+    ) {
+        return 0
+    }
+    return 1
+}
+
+function validatePipesPowerData(formData) {
+    if (
+        [
+            validateIntBetween(formData["temperature_supply"], 0, 200, "wrongTemperature", errorTemperatureSupply),
+            validateIntBetween(formData["temperature_return"], 0, 200, "wrongTemperature", errorTemperatureReturn),
+            compareTemperatureValues(
+                formData["temperature_supply"],
+                formData["temperature_return"],
+                "wrongTemperatureCompare",
+                errorTemperatureReturn
+            ),
+            validateFloatPositive(formData["power"], "wrongPower", errorPower),
+            validateFloatPositive(formData["roughness"], "wrongRoughness", errorRoughness, 3),
+        ].includes(0)
+    ) {
+        return 0
+    }
+    return 1
+}
+
 // prepare data in json structure
 function getHeadlossFlowData() {
     return {
@@ -219,10 +295,66 @@ function getHeadlossPowerData() {
     }
 }
 
+function getPipesFlowData() {
+    return {
+        "fluid": languageDictionary["fluidsArrays"]["eng"][fluid.selectedIndex],
+        "temperature": parseInt(temperature.value, 10),
+        "material": languageDictionary["materialsArrays"]["eng"][material.selectedIndex],
+        "flow": parseFloat(flow.value.replace(',', '.')),
+        "flow_unit": flow_unit.value,
+        "roughness": parseFloat(roughness.value.replace(',', '.')),
+    }
+}
+
+
+function getPipesPowerData() {
+    return {
+        "fluid": languageDictionary["fluidsArrays"]["eng"][fluid.selectedIndex],
+        "temperature_supply": parseInt(temperature_supply.value, 10),
+        "temperature_return": parseInt(temperature_return.value, 10),
+        "material": languageDictionary["materialsArrays"]["eng"][material.selectedIndex],
+        "power": parseFloat(power.value.replace(',', '.')),
+        "power_unit": power_unit.value,
+        "roughness": parseFloat(roughness.value.replace(',', '.')),
+    }
+}
+
+// output data
+function headlossShowResponse(resp) {
+    return results.innerHTML += `
+        <div>
+        ${getTranslatedSentence("Headloss")}: ${resp['headloss']}${resp['headloss_unit']},
+        ${getTranslatedSentence("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
+        </div>
+    `
+}
+
+function pipesShowResponse(resp) {
+    let internalTable = '';
+    for (diameterResult of resp["results"]) {
+        internalTable += `
+        <tr>
+            <td>${diameterResult["nominal_diameter"]}</td>
+            <td>${diameterResult["headloss"]}</td>
+            <td>${diameterResult["velocity"]}</td>
+        </tr>
+        `
+    }
+    return results.innerHTML = `
+        <table>
+            <tr>
+                <th>${getTranslatedSentence("Diameter")}</th>
+                <th>${getTranslatedSentence("Headloss")} [${resp["headloss_unit"]}]</th>
+                <th>${getTranslatedSentence("Velocity")} [${resp["velocity_unit"]}]</th>
+            </tr>
+            ${internalTable}
+        </table>
+    `
+}
 
 
 // fetch data from api
-function fetchData(url, formData, funcValidate) {
+function fetchData(url, formData, funcValidate, funcShowResp) {
     if (formButton.innerHTML != getTranslatedSentence("Calculate")) {
         // fetching data in progress
         return 0
@@ -241,12 +373,6 @@ function fetchData(url, formData, funcValidate) {
         body: JSON.stringify(formData)
     })
     .then(resp => resp.json())
-    .then(resp => {
-        results.innerHTML += `<div>
-        ${getTranslatedSentence("Headloss")}: ${resp['headloss']}${resp['headloss_unit']}, 
-        ${getTranslatedSentence("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
-        </div>
-        `;
-    })
+    .then(resp => funcShowResp(resp))
     .then(() => buttonEnable())
 }

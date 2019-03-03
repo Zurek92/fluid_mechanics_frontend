@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Fluid Mechanics - headloss</title>
+    <title>Fluid Mechanics - pipes</title>
     <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Dosis&amp;subset=latin-ext" rel="stylesheet">
 </head>
@@ -27,14 +27,14 @@
     <script>
         createCalcModeForm();
         headlossListeners(
-            "calculate/headloss",
-            generateHeadlossFlowForm,
-            generateHeadlossPowerForm,
-            getHeadlossFlowData,
-            getHeadlossPowerData,
-            validateHeadlossFlowData,
-            validateHeadlossPowerData,
-            headlossShowResponse,
+            "/calculate/pipes",
+            generatePipesFlowForm,
+            generatePipesPowerForm,
+            getPipesFlowData,
+            getPipesPowerData,
+            validatePipesFlowData,
+            validatePipesPowerData,
+            pipesShowResponse,
         );
     </script>
 </body>
