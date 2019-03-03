@@ -96,21 +96,22 @@ function createCalcModeForm() {
 }
 
 // listeners
-function headlossListeners() {
+function headlossListeners(url, flowFormFunc, powerFormFunc, flowData, powerData, validateFlow, validatePower) {
     calcMode.addEventListener("change", () => {
         if (calcMode.value == getTranslatedSentence("KnownFlow")) {
-            optionsForm.innerHTML = generateHeadlossFlowForm();
+            optionsForm.innerHTML = flowFormFunc();
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData("calculate/headloss", getHeadlossFlowData(), validateHeadlossFlowData)
+                fetchData(url, flowData(), validateFlow)
             });
         } else if (calcMode.value == getTranslatedSentence("KnownPower")) {
-            optionsForm.innerHTML = generateHeadlossPowerForm();
+            optionsForm.innerHTML = powerFormFunc();
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData("calculate/headloss", getHeadlossPowerData(), validateHeadlossPowerData)
+                fetchData(url, powerData(), validatePower)
             });
         }
     })
 }
+
 
 // validations
 function validateIntBetween(intValue, intMin, intMax, msgKey, elem) {

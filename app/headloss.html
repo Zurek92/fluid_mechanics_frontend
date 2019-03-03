@@ -26,7 +26,15 @@
     <script src="scripts/fetch_scripts.js"></script>
     <script>
         createCalcModeForm();
-        headlossListeners();
+        headlossListeners(
+            "calculate/headloss",
+            generateHeadlossFlowForm,
+            generateHeadlossPowerForm,
+            getHeadlossFlowData,
+            getHeadlossPowerData,
+            validateHeadlossFlowData,
+            validateHeadlossPowerData,
+        );
     </script>
 </body>
 </html>
