@@ -18,6 +18,7 @@ a:hover {
 table {
     border-collapse: collapse;
     border: 2px solid black;
+    margin-left: 25px;
 }
 
 th, td {
@@ -43,7 +44,7 @@ select, input {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: block;
-    width: 180px;
+    width: 275px;
     padding: 2px;
     border: 1px solid black;
     border-radius: 3px;
@@ -64,14 +65,15 @@ select, input {
 }
 
 .formInputTitle {
-    font-size: 12px;
+    font-size: 14px;
     font-family: sans-serif;
 }
 
 .errorMessage {
-    width: 180px;
-    font-size: 12px;
-    color: #dd0000;
+    width: 275px;
+    font-size: 14px;
+    color: #ff3333;
+    font-weight: bold;
 }
 
 .panel {
