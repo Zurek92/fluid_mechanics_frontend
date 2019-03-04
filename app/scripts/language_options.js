@@ -8,6 +8,10 @@ const languageDictionary = {
         "eng": "Selecting pipe dimension based on flow or power.",
         "pl": "Dobór średnicy na podstawie przepływu lub mocy."
     },
+    "URLManningPageDescr": {
+        "eng": "Calculate gravity flow and velocity with manning equation.",
+        "pl": "Obliczanie równaniem Manninga strumienia i prędkości dla grawitacyjnego przepływu ."
+    },
     "fluidsArrays": {"eng": ["water"], "pl": ["woda"]},
     "materialsArrays": {"eng": ["steel"], "pl": ["stal"]},
     "Calculate": {"eng": "Calculate", "pl": "Oblicz"},
