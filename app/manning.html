@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fluid Mechanics - manning</title>
+    <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Dosis&amp;subset=latin-ext" rel="stylesheet">
+</head>
+<body>
+    <div id="panel" class="panel">
+    </div>
+    <div class="box row">
+        <div class="mainBoxes">
+            <form>
+                <select id="calcMode">
+                </select>
+            </form>
+            <form id="optionsForm">
+            </form>
+        </div>
+        <div id="results" class="mainBoxes">
+        </div>
+    </div>
+    <script src="scripts/language_options.js"></script>
+    <script src="scripts/panel.js"></script>
+    <script src="scripts/fetch_scripts.js"></script>
+    <script>
+        createCalcModeForm();
+        headlossListeners(
+            "/calculate/pipes",
+            generatePipesFlowForm,
+            generatePipesPowerForm,
+            getPipesFlowData,
+            getPipesPowerData,
+            validatePipesFlowData,
+            validatePipesPowerData,
+            pipesShowResponse,
+        );
+    </script>
+</body>
+</html>
