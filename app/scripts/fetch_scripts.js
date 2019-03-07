@@ -9,6 +9,7 @@ const flowUnitArray = [
 ]
 const headlossUnitArray = ['atm', 'Pa', 'kPa', 'mbar', 'bar', 'mmHg']
 const powerUnitArray = ['W', 'kW', 'kcal/h']
+const slopeUnitArray = ['-', '%', '&permil;']
 
 function generateSelectOption(idElement, label, optionsArray) {
     let selectOptions = '';
@@ -110,6 +111,28 @@ function generatePipesPowerForm() {
     `
 }
 
+function generateManningForm() {
+    let linearDimension = "";
+    if (shapeMode.value == getTranslatedSentence("channelCircular")) {
+        linearDimension = generateInputOption('channelDiameter', "Diameter", "");
+    } else if (shapeMode.value == getTranslatedSentence("channelRectangular")) {
+        linearDimension = generateInputOption('channelWidth', "Width", "");
+    }
+    return `
+    ${linearDimension}
+    <div id="errorLinearDimension" class="errorMessage"></div>
+    ${generateInputOption('channelHeight', "Height", "")}
+    <div id="errorHeight" class="errorMessage"></div>
+    ${generateInputOption('channelSlope', "Slope", "")}
+    <div id="errorSlope" class="errorMessage"></div>
+    ${generateSelectOption('slopeUnit', "SlopeUnit", slopeUnitArray)}
+    ${generateInputOption('manningCoefficient', "ManningCoefficient", 0.013)}
+    <div id="errorManningCoefficient" class="errorMessage"></div>
+    <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+    `
+}
+    
+
 function buttonDisable() {
     formButton.innerHTML = getTranslatedSentence("Waiting");
 }
@@ -125,6 +148,15 @@ function createCalcModeForm() {
     <option>${getTranslatedSentence("KnownPower")}</option>
     `
     calcMode.value = "";
+}
+
+function createChannelShapeForm() {
+    shapeMode.innerHTML = `
+    <option value="" hidden>${getTranslatedSentence("ChooseShape")}</option>
+    <option>${getTranslatedSentence("channelCircular")}</option>
+    <option>${getTranslatedSentence("channelRectangular")}</option>
+    `
+    shapeMode.value = "";
 }
 
 // listeners
@@ -153,6 +185,14 @@ function headlossListeners(
     })
 }
 
+function manningListeners() {
+    shapeMode.addEventListener("change", () => {
+        optionsForm.innerHTML = generateManningForm();
+        document.querySelector("form > button").addEventListener("click", () => {
+            fetchData("/calculate/gravity_flow", getManningData(), validateManningData, manningShowResponse)
+        });
+    })
+}
 
 // validations
 function validateIntBetween(intValue, intMin, intMax, msgKey, elem) {
@@ -262,6 +302,36 @@ function validatePipesPowerData(formData) {
     return 1
 }
 
+function compareDimenstionsValues(channelDiameter, channelHeight, msgKey, elem) {
+    if (channelDiameter >= channelHeight) {
+        elem.innerHTML = "";
+        return 1
+    }
+    elem.innerHTML = getTranslatedSentence(msgKey);
+    return 0
+}
+
+function validateManningData(formData) {
+    const validationArray = [
+        validateFloatPositive(formData["height"], "wrongHeight", errorHeight),
+        validateFloatPositive(formData["slope"], "wrongChannelSlope", errorSlope),
+        validateFloatPositive(formData["manning_coefficient"], "wrongManningCoefficient", errorManningCoefficient),
+    ]
+    if ("width" in formData) {
+        validationArray.push(validateFloatPositive(formData["width"], "wrongChannelWidth", errorLinearDimension))
+    } else if ("diameter" in formData) {
+        validationArray.push(
+            validateFloatPositive(formData["diameter"], "wrongChannelDiameter", errorLinearDimension),
+            compareDimenstionsValues(formData["diameter"], formData["height"], "wrongHeightCompare", errorHeight)
+        )
+    }
+    
+    if (validationArray.includes(0)) {
+        return 0
+    }
+    return 1
+}
+
 // prepare data in json structure
 function getHeadlossFlowData() {
     return {
@@ -319,11 +389,42 @@ function getPipesPowerData() {
     }
 }
 
+function getManningData() {
+    let slope = parseFloat(channelSlope.value.replace(',', '.'));
+    if (slopeUnit.value == '%') {
+        slope /= 100;
+    } else if (slopeUnit.value == '‰') {
+        slope /= 1000;
+    }
+    
+    let linearDim = {};
+    if (document.getElementById("channelWidth")) {
+        linearDim = {"width": parseFloat(channelWidth.value.replace(',', '.'))};
+    } else if (document.getElementById("channelDiameter")) {
+        linearDim = {"diameter": parseFloat(channelDiameter.value.replace(',', '.'))};
+    }
+    return {
+        "height": parseFloat(channelHeight.value.replace(',', '.')),
+        "slope": slope,
+        "manning_coefficient": parseFloat(manningCoefficient.value.replace(',', '.')),
+        ...linearDim
+    }
+}
+
 // output data
 function headlossShowResponse(resp) {
     return results.innerHTML += `
         <div>
         ${getTranslatedSentence("Headloss")}: ${resp['headloss']}${resp['headloss_unit']},
+        ${getTranslatedSentence("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
+        </div>
+    `
+}
+
+function manningShowResponse(resp) {
+    return results.innerHTML += `
+        <div>
+        ${getTranslatedSentence("Flow")}: ${resp['flow']}${resp['flow_unit']},
         ${getTranslatedSentence("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
         </div>
     `
