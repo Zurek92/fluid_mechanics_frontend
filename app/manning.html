@@ -12,7 +12,7 @@
     <div class="box row">
         <div class="mainBoxes">
             <form>
-                <select id="calcMode">
+                <select id="shapeMode">
                 </select>
             </form>
             <form id="optionsForm">
@@ -25,17 +25,8 @@
     <script src="scripts/panel.js"></script>
     <script src="scripts/fetch_scripts.js"></script>
     <script>
-        createCalcModeForm();
-        headlossListeners(
-            "/calculate/pipes",
-            generatePipesFlowForm,
-            generatePipesPowerForm,
-            getPipesFlowData,
-            getPipesPowerData,
-            validatePipesFlowData,
-            validatePipesPowerData,
-            pipesShowResponse,
-        );
+        createChannelShapeForm();
+        manningListeners();
     </script>
 </body>
 </html>
