@@ -99,3 +99,7 @@ select, input {
     margin-bottom: auto;
     margin-right: 15px;
 }
+
+.panel > div > form > select {
+    width: 130px;
+}
