@@ -1,3 +1,4 @@
+import { languageDictionary } from './languages.js';
 import { getTranslatedSentence } from './language_options.js';
 
 // general config
@@ -481,4 +482,10 @@ function fetchData(url, formData, funcValidate, funcShowResp) {
 }
 
 
-export { createChannelShapeForm, manningListeners }
+export { createChannelShapeForm, manningListeners };
+export { createCalcModeForm, headlossListeners };
+
+export { generateHeadlossFlowForm, generateHeadlossPowerForm };
+export { getHeadlossFlowData, getHeadlossPowerData };
+export { validateHeadlossFlowData, validateHeadlossPowerData };
+export { headlossShowResponse };
