@@ -435,7 +435,7 @@ function manningShowResponse(resp) {
 
 function pipesShowResponse(resp) {
     let internalTable = '';
-    for (diameterResult of resp["results"]) {
+    for (let diameterResult of resp["results"]) {
         internalTable += `
         <tr>
             <td>${diameterResult["nominal_diameter"]}</td>
@@ -467,7 +467,6 @@ function fetchData(url, formData, funcValidate, funcShowResp) {
         // wrong form
         return 0
     }
-    buttonDisable();
     fetch(`${base_api_url}/${url}`, {
         method: 'POST',
         headers: {
@@ -489,3 +488,8 @@ export { generateHeadlossFlowForm, generateHeadlossPowerForm };
 export { getHeadlossFlowData, getHeadlossPowerData };
 export { validateHeadlossFlowData, validateHeadlossPowerData };
 export { headlossShowResponse };
+
+export { generatePipesFlowForm, generatePipesPowerForm }
+export { getPipesFlowData, getPipesPowerData }
+export { validatePipesFlowData, validatePipesPowerData }
+export { pipesShowResponse }
