@@ -1,4 +1,4 @@
-import { getTranslatedSentence, getUserCookieLanguage, userLanguage } from './language_options.js';
+import { getTranslatedSentence, getUserCookieLanguage, userLanguage } from './languages/language_options.js';
 
 panel.innerHTML = `
 <div class="panel_centered">

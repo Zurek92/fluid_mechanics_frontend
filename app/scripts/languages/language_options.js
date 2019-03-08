@@ -1,4 +1,4 @@
-import { languageDictionary } from './languages.js';
+import { languageDictionary } from './dictionary.js';
 
 function getUserCookieLanguage() {
     try {
@@ -8,17 +8,15 @@ function getUserCookieLanguage() {
     }
 }
 
+function getTranslatedSentence(key) {
+    return languageDictionary[key][userLanguage];
+}
+
 const userLanguageCookie = document.cookie;
 if (!userLanguageCookie) {
     document.cookie = "userLanguage=eng; expires=Fri, 31 Dec 9999 23:59:59 GMT";
 }
 
-let userLanguage = getUserCookieLanguage();
-
-
-function getTranslatedSentence(key) {
-    return languageDictionary[key][userLanguage];
-}
+const userLanguage = getUserCookieLanguage();
 
 export { getTranslatedSentence, getUserCookieLanguage, userLanguage };
-

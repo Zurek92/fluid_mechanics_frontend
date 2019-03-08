@@ -1,5 +1,5 @@
-import { languageDictionary } from './languages.js';
-import { getTranslatedSentence } from './language_options.js';
+import { languageDictionary } from './languages/dictionary.js';
+import { getTranslatedSentence } from './languages/language_options.js';
 
 // general config
 const base_api_url = 'http://localhost:12000'
