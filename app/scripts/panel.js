@@ -1,3 +1,5 @@
+import { getTranslatedSentence, getUserCookieLanguage, userLanguage } from './language_options.js';
+
 panel.innerHTML = `
 <div class="panel_centered">
     <a href="/">${getTranslatedSentence("mainPage")}</a>
@@ -22,6 +24,5 @@ selectLanguage.addEventListener("change", () => {
         cookieLangValue = "pl";
     }
     document.cookie = `userLanguage=${cookieLangValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-    userLanguage = getUserCookieLanguage();
     location.reload();
 })
