@@ -1,3 +1,5 @@
+import { getTranslatedSentence } from './language_options.js';
+
 // general config
 const base_api_url = 'http://localhost:12000'
 
@@ -13,7 +15,7 @@ const slopeUnitArray = ['-', '%', '&permil;']
 
 function generateSelectOption(idElement, label, optionsArray) {
     let selectOptions = '';
-    for (option of optionsArray) {
+    for (let option of optionsArray) {
         selectOptions += `<option>${option}</option>`;
     };
     const translatedLabel = getTranslatedSentence(label);
@@ -477,3 +479,6 @@ function fetchData(url, formData, funcValidate, funcShowResp) {
     .then(resp => funcShowResp(resp))
     .then(() => buttonEnable())
 }
+
+
+export { createChannelShapeForm, manningListeners }
