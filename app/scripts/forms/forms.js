@@ -1,4 +1,4 @@
-import { getTranslatedSentence } from '../languages/language_options.js';
+import { languageWord } from '../languages/language_options.js';
 
 const nominalDiameterArray = [8, 10, 15, 20, 25, 32, 40, 50, 65, 80, 100, 125, 150]
 const flowUnitArray = [
@@ -25,12 +25,15 @@ const headlossUnitArray = ['atm', 'Pa', 'kPa', 'mbar', 'bar', 'mmHg']
 const powerUnitArray = ['W', 'kW', 'kcal/h']
 const slopeUnitArray = ['-', '%', '&permil;']
 
-function generateSelectOption(idElement, label, optionsArray) {
+function generateSelectOption(idElement, label, optionsArray, initHidden=null) {
     let selectOptions = [];
+    if (initHidden) {
+        selectOptions.push(`<option value="" hidden>${languageWord(initHidden)}</option>`)
+    }
     for (let option of optionsArray) {
         selectOptions.push(`<option>${option}</option>`);
     };
-    const translatedLabel = getTranslatedSentence(label);
+    const translatedLabel = languageWord(label);
     let formElement = `
         <span class="formInputTitle">${translatedLabel}:</span>
         <select id="${idElement}">
@@ -42,7 +45,7 @@ function generateSelectOption(idElement, label, optionsArray) {
 }
 
 function generateInputOption(idElement, label, defaultValue) {
-    const translatedLabel = getTranslatedSentence(label);
+    const translatedLabel = languageWord(label);
     return `
     <span class="formInputTitle">${translatedLabel}:</span>
     <input id="${idElement}" placeholder="${translatedLabel}" value="${defaultValue}">
@@ -51,10 +54,10 @@ function generateInputOption(idElement, label, defaultValue) {
 
 function generateHeadlossFlowForm() {
     return `
-        ${generateSelectOption('fluid', "Fluid", getTranslatedSentence("fluidsArrays"))}
+        ${generateSelectOption('fluid', "Fluid", languageWord("fluidsArrays"))}
         ${generateInputOption('temperature', "Temperature", "")}
         <div id="errorTemperature" class="errorMessage"></div>
-        ${generateSelectOption('material', "Material", getTranslatedSentence("materialsArrays"))}
+        ${generateSelectOption('material', "Material", languageWord("materialsArrays"))}
         ${generateSelectOption('nominal_diameter', "NominalDiameter", nominalDiameterArray)}
         ${generateInputOption('flow', "Flow", "")}
         <div id="errorFlow" class="errorMessage"></div>
@@ -66,18 +69,18 @@ function generateHeadlossFlowForm() {
         ${generateInputOption('local_loss_coefficient', "LocalLossCoefficient", "0")}
         <div id="errorLLC" class="errorMessage"></div>
         ${generateSelectOption('headloss_unit', "HeadlossUnit", headlossUnitArray)}
-        <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+        <button type="button" id="formButton">${languageWord("Calculate")}</button>
     `
 }
 
 function generateHeadlossPowerForm() {
     return `
-        ${generateSelectOption('fluid', "Fluid", getTranslatedSentence("fluidsArrays"))}
+        ${generateSelectOption('fluid', "Fluid", languageWord("fluidsArrays"))}
         ${generateInputOption('temperature_supply', "TemperatureSupply", "")}
         <div id="errorTemperatureSupply" class="errorMessage"></div>
         ${generateInputOption('temperature_return', "TemperatureReturn", "")}
         <div id="errorTemperatureReturn" class="errorMessage"></div>
-        ${generateSelectOption('material', "Material", getTranslatedSentence("materialsArrays"))}
+        ${generateSelectOption('material', "Material", languageWord("materialsArrays"))}
         ${generateSelectOption('nominal_diameter', "NominalDiameter", nominalDiameterArray)}
         ${generateInputOption('power', "Power", "")}
         <div id="errorPower" class="errorMessage"></div>
@@ -89,47 +92,47 @@ function generateHeadlossPowerForm() {
         ${generateInputOption('local_loss_coefficient', "LocalLossCoefficient", "0")}
         <div id="errorLLC" class="errorMessage"></div>
         ${generateSelectOption('headloss_unit', "HeadlossUnit", headlossUnitArray)}
-        <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+        <button type="button" id="formButton">${languageWord("Calculate")}</button>
     `
 }
 
 function generatePipesFlowForm() {
     return `
-    ${generateSelectOption('fluid', "Fluid", getTranslatedSentence("fluidsArrays"))}
+    ${generateSelectOption('fluid', "Fluid", languageWord("fluidsArrays"))}
     ${generateInputOption('temperature', "Temperature", "")}
     <div id="errorTemperature" class="errorMessage"></div>
-    ${generateSelectOption('material', "Material", getTranslatedSentence("materialsArrays"))}
+    ${generateSelectOption('material', "Material", languageWord("materialsArrays"))}
     ${generateInputOption('flow', "Flow", "")}
     <div id="errorFlow" class="errorMessage"></div>
     ${generateSelectOption('flow_unit', "FlowUnit", flowUnitArray)}
     ${generateInputOption('roughness', "Roughness", "1.5")}
     <div id="errorRoughness" class="errorMessage"></div>
-    <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+    <button type="button" id="formButton">${languageWord("Calculate")}</button>
     `
 }
 
 function generatePipesPowerForm() {
     return `
-    ${generateSelectOption('fluid', "Fluid", getTranslatedSentence("fluidsArrays"))}
+    ${generateSelectOption('fluid', "Fluid", languageWord("fluidsArrays"))}
     ${generateInputOption('temperature_supply', "TemperatureSupply", "")}
     <div id="errorTemperatureSupply" class="errorMessage"></div>
     ${generateInputOption('temperature_return', "TemperatureReturn", "")}
     <div id="errorTemperatureReturn" class="errorMessage"></div>
-    ${generateSelectOption('material', "Material", getTranslatedSentence("materialsArrays"))}
+    ${generateSelectOption('material', "Material", languageWord("materialsArrays"))}
     ${generateInputOption('power', "Power", "")}
     <div id="errorPower" class="errorMessage"></div>
     ${generateSelectOption('power_unit', "PowerUnit", powerUnitArray)}
     ${generateInputOption('roughness', "Roughness", "1.5")}
     <div id="errorRoughness" class="errorMessage"></div>
-    <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+    <button type="button" id="formButton">${languageWord("Calculate")}</button>
     `
 }
 
 function generateManningForm() {
     let linearDimension = "";
-    if (shapeMode.value == getTranslatedSentence("channelCircular")) {
+    if (shapeMode.value == languageWord("channelCircular")) {
         linearDimension = generateInputOption('channelDiameter', "Diameter", "");
-    } else if (shapeMode.value == getTranslatedSentence("channelRectangular")) {
+    } else if (shapeMode.value == languageWord("channelRectangular")) {
         linearDimension = generateInputOption('channelWidth', "Width", "");
     }
     return `
@@ -142,34 +145,15 @@ function generateManningForm() {
     ${generateSelectOption('slopeUnit', "SlopeUnit", slopeUnitArray)}
     ${generateInputOption('manningCoefficient', "ManningCoefficient", 0.013)}
     <div id="errorManningCoefficient" class="errorMessage"></div>
-    <button type="button" id="formButton">${getTranslatedSentence("Calculate")}</button>
+    <button type="button" id="formButton">${languageWord("Calculate")}</button>
     `
-}
-
-function createCalcModeForm() {
-    calcMode.innerHTML = `
-    <option value="" hidden>${getTranslatedSentence("ChooseMode")}</option>
-    <option>${getTranslatedSentence("KnownFlow")}</option>
-    <option>${getTranslatedSentence("KnownPower")}</option>
-    `
-    calcMode.value = "";
-}
-
-function createChannelShapeForm() {
-    shapeMode.innerHTML = `
-    <option value="" hidden>${getTranslatedSentence("ChooseShape")}</option>
-    <option>${getTranslatedSentence("channelCircular")}</option>
-    <option>${getTranslatedSentence("channelRectangular")}</option>
-    `
-    shapeMode.value = "";
 }
 
 export {
-    createCalcModeForm,
-    createChannelShapeForm,
     generateHeadlossFlowForm,
     generateHeadlossPowerForm,
     generatePipesFlowForm,
     generatePipesPowerForm,
-    generateManningForm
+    generateManningForm,
+    generateSelectOption
 };

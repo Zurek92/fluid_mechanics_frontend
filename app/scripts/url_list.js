@@ -1,4 +1,4 @@
-import { getTranslatedSentence, userLanguage } from './languages/language_options.js';
+import { languageWord, userLanguage } from './languages/language_options.js';
 import { languageDictionary } from './languages/dictionary.js';
 
 const url_elements = {

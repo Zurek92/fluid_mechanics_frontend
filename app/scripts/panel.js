@@ -1,8 +1,8 @@
-import { getTranslatedSentence, getUserCookieLanguage, userLanguage } from './languages/language_options.js';
+import { languageWord, getUserCookieLanguage, userLanguage } from './languages/language_options.js';
 
 panel.innerHTML = `
 <div class="panel_centered">
-    <a href="/">${getTranslatedSentence("mainPage")}</a>
+    <a href="/">${languageWord("mainPage")}</a>
 </div>
 <div>
     <form class="panel_centered">
@@ -14,7 +14,7 @@ panel.innerHTML = `
 </div>
 `
 
-selectLanguage.selectedIndex = getTranslatedSentence("selectedLanguage");
+selectLanguage.selectedIndex = languageWord("selectedLanguage");
 
 selectLanguage.addEventListener("change", () => {
     let cookieLangValue = ""

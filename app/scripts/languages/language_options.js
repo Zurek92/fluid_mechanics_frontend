@@ -8,7 +8,7 @@ function getUserCookieLanguage() {
     }
 }
 
-function getTranslatedSentence(key) {
+function languageWord(key) {
     return languageDictionary[key][userLanguage];
 }
 
@@ -19,4 +19,4 @@ if (!userLanguageCookie) {
 
 const userLanguage = getUserCookieLanguage();
 
-export { getTranslatedSentence, getUserCookieLanguage, userLanguage };
+export { languageWord, getUserCookieLanguage, userLanguage };

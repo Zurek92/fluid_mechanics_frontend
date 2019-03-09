@@ -1,8 +1,6 @@
 import { languageDictionary } from './languages/dictionary.js';
-import { getTranslatedSentence } from './languages/language_options.js';
+import { languageWord } from './languages/language_options.js';
 import {
-    createCalcModeForm,
-    createChannelShapeForm,
     generateHeadlossFlowForm,
     generateHeadlossPowerForm,
     generatePipesFlowForm,
@@ -16,11 +14,11 @@ const base_api_url = 'http://localhost:12000'
 // prepare forms
 
 function buttonDisable() {
-    formButton.innerHTML = getTranslatedSentence("Waiting");
+    formButton.innerHTML = languageWord("Waiting");
 }
 
 function buttonEnable() {
-    formButton.innerHTML = getTranslatedSentence("Calculate");
+    formButton.innerHTML = languageWord("Calculate");
 }
 
 // listeners
@@ -35,12 +33,12 @@ function headlossListeners(
     funcShowResp
 ) {
     calcMode.addEventListener("change", () => {
-        if (calcMode.value == getTranslatedSentence("KnownFlow")) {
+        if (calcMode.value == languageWord("KnownFlow")) {
             optionsForm.innerHTML = flowFormFunc();
             document.querySelector("form > button").addEventListener("click", () => {
                 fetchData(url, flowData(), validateFlow, funcShowResp)
             });
-        } else if (calcMode.value == getTranslatedSentence("KnownPower")) {
+        } else if (calcMode.value == languageWord("KnownPower")) {
             optionsForm.innerHTML = powerFormFunc();
             document.querySelector("form > button").addEventListener("click", () => {
                 fetchData(url, powerData(), validatePower, funcShowResp)
@@ -64,7 +62,7 @@ function validateIntBetween(intValue, intMin, intMax, msgKey, elem) {
         elem.innerHTML = "";
         return 1
     }
-    elem.innerHTML = getTranslatedSentence(msgKey);
+    elem.innerHTML = languageWord(msgKey);
     return 0
 }
 
@@ -73,7 +71,7 @@ function validateFloatNonNegative(floatValue, msgKey, elem) {
         elem.innerHTML = "";
         return 1
     }
-    elem.innerHTML = getTranslatedSentence(msgKey);
+    elem.innerHTML = languageWord(msgKey);
     return 0
 }
 
@@ -82,7 +80,7 @@ function validateFloatPositive(floatValue, msgKey, elem, valueMax=Infinity) {
         elem.innerHTML = "";
         return 1
     }
-    elem.innerHTML = getTranslatedSentence(msgKey);
+    elem.innerHTML = languageWord(msgKey);
     return 0
 }
 
@@ -91,7 +89,7 @@ function compareTemperatureValues(temperatureSupply, temperatureReturn, msgKey, 
         elem.innerHTML = "";
         return 1
     }
-    elem.innerHTML = getTranslatedSentence(msgKey);
+    elem.innerHTML = languageWord(msgKey);
     return 0
 }
 
@@ -171,7 +169,7 @@ function compareDimenstionsValues(channelDiameter, channelHeight, msgKey, elem) 
         elem.innerHTML = "";
         return 1
     }
-    elem.innerHTML = getTranslatedSentence(msgKey);
+    elem.innerHTML = languageWord(msgKey);
     return 0
 }
 
@@ -279,8 +277,8 @@ function getManningData() {
 function headlossShowResponse(resp) {
     return results.innerHTML += `
         <div>
-        ${getTranslatedSentence("Headloss")}: ${resp['headloss']}${resp['headloss_unit']},
-        ${getTranslatedSentence("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
+        ${languageWord("Headloss")}: ${resp['headloss']}${resp['headloss_unit']},
+        ${languageWord("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
         </div>
     `
 }
@@ -288,8 +286,8 @@ function headlossShowResponse(resp) {
 function manningShowResponse(resp) {
     return results.innerHTML += `
         <div>
-        ${getTranslatedSentence("Flow")}: ${resp['flow']}${resp['flow_unit']},
-        ${getTranslatedSentence("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
+        ${languageWord("Flow")}: ${resp['flow']}${resp['flow_unit']},
+        ${languageWord("Velocity")}: ${resp['velocity']}${resp['velocity_unit']}
         </div>
     `
 }
@@ -308,9 +306,9 @@ function pipesShowResponse(resp) {
     return results.innerHTML = `
         <table>
             <tr>
-                <th>${getTranslatedSentence("Diameter")}</th>
-                <th>${getTranslatedSentence("Headloss")} [${resp["headloss_unit"]}]</th>
-                <th>${getTranslatedSentence("Velocity")} [${resp["velocity_unit"]}]</th>
+                <th>${languageWord("Diameter")}</th>
+                <th>${languageWord("Headloss")} [${resp["headloss_unit"]}]</th>
+                <th>${languageWord("Velocity")} [${resp["velocity_unit"]}]</th>
             </tr>
             ${internalTable}
         </table>
@@ -320,7 +318,7 @@ function pipesShowResponse(resp) {
 
 // fetch data from api
 function fetchData(url, formData, funcValidate, funcShowResp) {
-    if (formButton.innerHTML != getTranslatedSentence("Calculate")) {
+    if (formButton.innerHTML != languageWord("Calculate")) {
         // fetching data in progress
         return 0
     }
@@ -342,8 +340,8 @@ function fetchData(url, formData, funcValidate, funcShowResp) {
 }
 
 
-export { createChannelShapeForm, manningListeners };
-export { createCalcModeForm, headlossListeners };
+export { manningListeners };
+export { headlossListeners };
 
 export { generateHeadlossFlowForm, generateHeadlossPowerForm };
 export { getHeadlossFlowData, getHeadlossPowerData };
