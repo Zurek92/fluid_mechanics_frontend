@@ -1,11 +1,6 @@
 import { languageDictionary } from './languages/dictionary.js';
 import { languageWord } from './languages/language_options.js';
-import {
-    generateHeadlossForm,
-    generatePipesFlowForm,
-    generatePipesPowerForm,
-    generateManningForm
-} from './forms/forms.js'
+import { generateHeadlossForm, generateManningForm } from './forms/forms.js'
 
 // general config
 const base_api_url = 'http://localhost:12000'
@@ -23,6 +18,7 @@ function buttonEnable() {
 // listeners
 function headlossListeners(
     url,
+    template,
     flowData,
     powerData,
     validateFlow,
@@ -31,12 +27,12 @@ function headlossListeners(
 ) {
     calcMode.addEventListener("change", () => {
         if (calcMode.value == languageWord("KnownFlow")) {
-            optionsForm.innerHTML = generateHeadlossForm("flow");
+            optionsForm.innerHTML = generateHeadlossForm("flow", template);
             document.querySelector("form > button").addEventListener("click", () => {
                 fetchData(url, flowData(), validateFlow, funcShowResp)
             });
         } else if (calcMode.value == languageWord("KnownPower")) {
-            optionsForm.innerHTML = generateHeadlossForm("power");
+            optionsForm.innerHTML = generateHeadlossForm("power", template);
             document.querySelector("form > button").addEventListener("click", () => {
                 fetchData(url, powerData(), validatePower, funcShowResp)
             });
@@ -344,7 +340,6 @@ export { getHeadlossFlowData, getHeadlossPowerData };
 export { validateHeadlossFlowData, validateHeadlossPowerData };
 export { headlossShowResponse };
 
-export { generatePipesFlowForm, generatePipesPowerForm }
 export { getPipesFlowData, getPipesPowerData }
 export { validatePipesFlowData, validatePipesPowerData }
 export { pipesShowResponse }

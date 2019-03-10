@@ -1,6 +1,5 @@
 // selecting pipe by velocity and headloss
 import { headlossListeners } from '../fetch_scripts.js'
-import { generatePipesFlowForm, generatePipesPowerForm } from '../fetch_scripts.js'
 import { getPipesFlowData, getPipesPowerData } from '../fetch_scripts.js'
 import { validatePipesFlowData, validatePipesPowerData } from '../fetch_scripts.js'
 import { pipesShowResponse } from '../fetch_scripts.js'
@@ -17,8 +16,7 @@ calcMode.innerHTML = generateSelectOption('', "ChooseMode", optionsArray, "Choos
 
 headlossListeners(
     "calculate/pipes",
-    generatePipesFlowForm,
-    generatePipesPowerForm,
+    "pipes",
     getPipesFlowData,
     getPipesPowerData,
     validatePipesFlowData,

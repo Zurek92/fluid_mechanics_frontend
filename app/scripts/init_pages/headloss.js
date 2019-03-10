@@ -16,6 +16,7 @@ calcMode.innerHTML = generateSelectOption('', "ChooseMode", optionsArray, "Choos
 
 headlossListeners(
     "calculate/headloss",
+    "headloss",
     getHeadlossFlowData,
     getHeadlossPowerData,
     validateHeadlossFlowData,
