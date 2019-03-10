@@ -1,5 +1,4 @@
-import { manningListeners } from '../fetch_scripts.js'
-
+import { manningListeners } from '../forms/actions.js'
 import { generateSelectOption } from '../forms/forms.js'
 import { languageWord } from '../languages/language_options.js';
 

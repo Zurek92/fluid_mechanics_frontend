@@ -1,4 +1,4 @@
-import { languageWord, getUserCookieLanguage, userLanguage } from './languages/language_options.js';
+import { languageWord, getUserCookieLanguage, userLanguage } from '../languages/language_options.js';
 
 panel.innerHTML = `
 <div class="panel_centered">

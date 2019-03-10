@@ -1,10 +1,10 @@
 // selecting pipe by velocity and headloss
-import { headlossListeners } from '../fetch_scripts.js'
-import { getPipesFlowData, getPipesPowerData } from '../fetch_scripts.js'
-import { validatePipesFlowData, validatePipesPowerData } from '../fetch_scripts.js'
-import { pipesShowResponse } from '../fetch_scripts.js'
-
+import { pipesShowResponse } from '../api_interaction/responses.js'
+import { headlossListeners } from '../forms/actions.js'
 import { generateSelectOption } from '../forms/forms.js'
+import { getPipesFlowData, getPipesPowerData } from '../forms/prepare_jsons.js'
+import { validatePipesFlowData, validatePipesPowerData } from '../forms/validation.js'
+
 import { languageWord } from '../languages/language_options.js';
 
 const optionsArray = [

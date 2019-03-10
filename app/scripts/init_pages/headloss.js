@@ -1,10 +1,9 @@
 // calculate headloss in selected pipe
-import { headlossListeners } from '../fetch_scripts.js'
-import { getHeadlossFlowData, getHeadlossPowerData } from '../fetch_scripts.js'
-import { validateHeadlossFlowData, validateHeadlossPowerData } from '../fetch_scripts.js'
-import { headlossShowResponse } from '../fetch_scripts.js'
-
+import { headlossShowResponse } from '../api_interaction/responses.js'
+import { headlossListeners } from '../forms/actions.js'
 import { generateSelectOption } from '../forms/forms.js'
+import { getHeadlossFlowData, getHeadlossPowerData } from '../forms/prepare_jsons.js'
+import { validateHeadlossFlowData, validateHeadlossPowerData } from '../forms/validation.js'
 import { languageWord } from '../languages/language_options.js';
 
 const optionsArray = [
