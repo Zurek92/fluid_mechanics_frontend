@@ -1,59 +1,86 @@
 import { languageDictionary } from '../languages/dictionary.js';
 import { languageWord } from '../languages/language_options.js';
 
-export function getHeadlossFlowData() {
+function specifiedPowerValues() {
     return {
-        "fluid": languageDictionary["fluidsArrays"]["eng"][fluid.selectedIndex],
-        "temperature": parseInt(temperature.value, 10),
-        "nominal_diameter": parseInt(nominal_diameter.value, 10),
-        "material": languageDictionary["materialsArrays"]["eng"][material.selectedIndex],
-        "flow": parseFloat(flow.value.replace(',', '.')),
-        "flow_unit": flow_unit.value,
-        "length": parseFloat(pipe_length.value.replace(',', '.')),
-        "roughness": parseFloat(roughness.value.replace(',', '.')),
-        "local_loss_coefficient": parseFloat(local_loss_coefficient.value.replace(',', '.')),
-        "headloss_unit": headloss_unit.value
-    }
-}
-
-
-export function getHeadlossPowerData() {
-    return {
-        "fluid": languageDictionary["fluidsArrays"]["eng"][fluid.selectedIndex],
         "temperature_supply": parseInt(temperature_supply.value, 10),
         "temperature_return": parseInt(temperature_return.value, 10),
-        "nominal_diameter": parseInt(nominal_diameter.value, 10),
-        "material": languageDictionary["materialsArrays"]["eng"][material.selectedIndex],
         "power": parseFloat(power.value.replace(',', '.')),
         "power_unit": power_unit.value,
-        "length": parseFloat(pipe_length.value.replace(',', '.')),
-        "roughness": parseFloat(roughness.value.replace(',', '.')),
-        "local_loss_coefficient": parseFloat(local_loss_coefficient.value.replace(',', '.')),
-        "headloss_unit": headloss_unit.value
     }
 }
 
-export function getPipesFlowData() {
+function specifiedFlowValues() {
     return {
-        "fluid": languageDictionary["fluidsArrays"]["eng"][fluid.selectedIndex],
         "temperature": parseInt(temperature.value, 10),
-        "material": languageDictionary["materialsArrays"]["eng"][material.selectedIndex],
         "flow": parseFloat(flow.value.replace(',', '.')),
         "flow_unit": flow_unit.value,
-        "roughness": parseFloat(roughness.value.replace(',', '.')),
     }
 }
 
+function specifiedMaterial(diameterExtend=false) {
+    const materialParams = {
+        "material": languageDictionary["materialsArrays"]["eng"][material.selectedIndex],
+        "roughness": parseFloat(roughness.value.replace(',', '.')),
+    }
+    if (diameterExtend) {
+        materialParams["nominal_diameter"] = parseInt(nominal_diameter.value, 10);
+    }
+    return materialParams;
+}
 
-export function getPipesPowerData() {
+function specifiedPipeSystem() {
+    return {
+        "length": parseFloat(pipe_length.value.replace(',', '.')),
+        "local_loss_coefficient": parseFloat(local_loss_coefficient.value.replace(',', '.')),
+    }
+}
+
+function specifiedHeadlossUnitValue() {
+    return {
+        "headloss_unit": headloss_unit.value,
+    }
+}
+
+function specifiedFluid() {
     return {
         "fluid": languageDictionary["fluidsArrays"]["eng"][fluid.selectedIndex],
-        "temperature_supply": parseInt(temperature_supply.value, 10),
-        "temperature_return": parseInt(temperature_return.value, 10),
-        "material": languageDictionary["materialsArrays"]["eng"][material.selectedIndex],
-        "power": parseFloat(power.value.replace(',', '.')),
-        "power_unit": power_unit.value,
-        "roughness": parseFloat(roughness.value.replace(',', '.')),
+    }
+}
+
+export function getHeadlossData(flowMode, formMode) {
+    const fluidParams = {
+        ...specifiedFluid(),
+    }
+    let materialParams;
+    switch(formMode) {
+        case "headloss":
+            materialParams = {
+                ...specifiedMaterial(true),
+                ...specifiedPipeSystem(),
+                ...specifiedHeadlossUnitValue(),
+            }
+            break;
+        case "pipes":
+            materialParams = {
+                ...specifiedFluid(),
+                ...specifiedMaterial(false)
+            }
+            break;
+    }
+    switch(flowMode) {
+        case "flow":
+            return {
+                ...fluidParams,
+                ...materialParams,
+                ...specifiedFlowValues()
+            };
+        case "power":
+            return {
+                ...fluidParams,
+                ...materialParams,
+                ...specifiedPowerValues()
+            };
     }
 }
 

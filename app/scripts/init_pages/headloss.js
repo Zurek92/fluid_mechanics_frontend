@@ -2,7 +2,7 @@
 import { headlossShowResponse } from '../api_interaction/responses.js'
 import { headlossListeners } from '../forms/actions.js'
 import { generateSelectOption } from '../forms/forms.js'
-import { getHeadlossFlowData, getHeadlossPowerData } from '../forms/prepare_jsons.js'
+import { getHeadlossData } from '../forms/prepare_jsons.js'
 import { validateHeadlossFlowData, validateHeadlossPowerData } from '../forms/validation.js'
 import { languageWord } from '../languages/language_options.js';
 
@@ -16,8 +16,7 @@ calcMode.innerHTML = generateSelectOption('', "ChooseMode", optionsArray, "Choos
 headlossListeners(
     "calculate/headloss",
     "headloss",
-    getHeadlossFlowData,
-    getHeadlossPowerData,
+    getHeadlossData,
     validateHeadlossFlowData,
     validateHeadlossPowerData,
     headlossShowResponse,

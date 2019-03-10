@@ -2,7 +2,7 @@
 import { pipesShowResponse } from '../api_interaction/responses.js'
 import { headlossListeners } from '../forms/actions.js'
 import { generateSelectOption } from '../forms/forms.js'
-import { getPipesFlowData, getPipesPowerData } from '../forms/prepare_jsons.js'
+import { getHeadlossData } from '../forms/prepare_jsons.js'
 import { validatePipesFlowData, validatePipesPowerData } from '../forms/validation.js'
 
 import { languageWord } from '../languages/language_options.js';
@@ -17,8 +17,7 @@ calcMode.innerHTML = generateSelectOption('', "ChooseMode", optionsArray, "Choos
 headlossListeners(
     "calculate/pipes",
     "pipes",
-    getPipesFlowData,
-    getPipesPowerData,
+    getHeadlossData,
     validatePipesFlowData,
     validatePipesPowerData,
     pipesShowResponse,

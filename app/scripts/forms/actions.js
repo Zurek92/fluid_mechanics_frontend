@@ -16,8 +16,7 @@ export function buttonEnable() {
 export function headlossListeners(
     url,
     template,
-    flowData,
-    powerData,
+    jsonData,
     validateFlow,
     validatePower,
     funcShowResp
@@ -26,12 +25,12 @@ export function headlossListeners(
         if (calcMode.value == languageWord("KnownFlow")) {
             optionsForm.innerHTML = generateHeadlossForm("flow", template);
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData(url, flowData(), validateFlow, funcShowResp)
+                fetchData(url, jsonData("flow", template), validateFlow, funcShowResp)
             });
         } else if (calcMode.value == languageWord("KnownPower")) {
             optionsForm.innerHTML = generateHeadlossForm("power", template);
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData(url, powerData(), validatePower, funcShowResp)
+                fetchData(url, jsonData("power", template), validatePower, funcShowResp)
             });
         }
     })
