@@ -1,138 +1,130 @@
 import { languageWord } from '../languages/language_options.js';
 
-function validateIntBetween(intValue, intMin, intMax, msgKey, elem) {
-    if (Number.isInteger(intValue) && intValue >= intMin && intValue <= intMax) {
-        elem.innerHTML = "";
-        return 1
+function validateNumber(
+    elemId, value, valueMin, valueMax, minExclude=false, maxExclude=false, isInteger=false
+) {
+    if (isNaN(value)) {
+        elemId.innerHTML = languageWord("validationNotNumberValue");
+        return false;
     }
-    elem.innerHTML = languageWord(msgKey);
-    return 0
+    if (minExclude ? value <= valueMin : value < valueMin) {
+        elemId.innerHTML = languageWord("validationValueTooLow");
+        return false;
+    }
+    if (maxExclude ? value >= valueMax : value > valueMax) {
+        elemId.innerHTML = languageWord("validationValueTooHigh");
+        return false;
+    }
+    if (isInteger && !Number.isInteger(value)) {
+        elemId.innerHTML = languageWord("validationValueShouldBeInteger");
+        return false;
+    }
+    elemId.innerHTML = "";
+    return true
 }
 
-function validateFloatNonNegative(floatValue, msgKey, elem) {
-    if (!isNaN(floatValue) && floatValue >= 0) {
-        elem.innerHTML = "";
-        return 1
+function compareValues(elemId, value1, value2, mode, msgKey) {
+    if (isNaN(value1) || isNaN(value2)) {
+        return false;
     }
-    elem.innerHTML = languageWord(msgKey);
-    return 0
-}
-
-function validateFloatPositive(floatValue, msgKey, elem, valueMax=Infinity) {
-    if (!isNaN(floatValue) && floatValue > 0 && floatValue <= valueMax) {
-        elem.innerHTML = "";
-        return 1
+    let compare;
+    switch (mode) {
+        case "equal":
+            compare = value1 == value2;
+            break;
+        case "notEqual":
+            compare = value1 != value2;
+            break;
+        case "greaterThan":
+            compare = value1 > value2;
+            break;
+        case "lowerThan":
+            compare = value1 < value2;
+            break;
+        case "greaterEqual":
+            compare = value1 >= value2;
+            break;
+        case "lowerEqual":
+            compare = value1 <= value2;
+            break;
     }
-    elem.innerHTML = languageWord(msgKey);
-    return 0
-}
-
-function compareTemperatureValues(temperatureSupply, temperatureReturn, msgKey, elem) {
-    if (temperatureSupply != temperatureReturn) {
-        elem.innerHTML = "";
-        return 1
+    if (!compare) {
+        elemId.innerHTML = languageWord(msgKey);
     }
-    elem.innerHTML = languageWord(msgKey);
-    return 0
+    return compare;
 }
 
 export function validateHeadlossFlowData(formData) {
-    if (
-        [
-            validateIntBetween(formData["temperature"], 0, 200, "wrongTemperature", errorTemperature),
-            validateFloatPositive(formData["flow"], "wrongFlow", errorFlow),
-            validateFloatPositive(formData["roughness"], "wrongRoughness", errorRoughness, 3),
-            validateFloatPositive(formData["length"], "wrongLength", errorPipeLength),
-            validateFloatNonNegative(formData["local_loss_coefficient"], "wrongLLC", errorLLC),
-        ].includes(0)
-    ) {
-        return 0
-    }
-    return 1
+    return [
+        validateNumber(errorTemperature, formData["temperature"], 0, 200, false, false, true),
+        validateNumber(errorFlow, formData["flow"], 0, Infinity, false, false, false),
+        validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
+        validateNumber(errorPipeLength, formData["length"], 0, Infinity, true, false, false),
+        validateNumber(errorLLC, formData["local_loss_coefficient"], 0, Infinity, false, false, false),
+    ].includes(false)
 }
 
 export function validateHeadlossPowerData(formData) {
-    if (
-        [
-            validateIntBetween(formData["temperature_supply"], 0, 200, "wrongTemperature", errorTemperatureSupply),
-            validateIntBetween(formData["temperature_return"], 0, 200, "wrongTemperature", errorTemperatureReturn),
-            compareTemperatureValues(
-                formData["temperature_supply"], 
-                formData["temperature_return"], 
-                "wrongTemperatureCompare", 
-                errorTemperatureReturn
-            ),
-            validateFloatPositive(formData["power"], "wrongPower", errorPower),
-            validateFloatPositive(formData["roughness"], "wrongRoughness", errorRoughness, 3),
-            validateFloatPositive(formData["length"], "wrongLength", errorPipeLength),
-            validateFloatNonNegative(formData["local_loss_coefficient"], "wrongLLC", errorLLC),
-        ].includes(0)
-    ) {
-        return 0
-    }
-    return 1
+    return [
+        validateNumber(errorTemperatureSupply, formData["temperature_supply"], 0, 200, false, false, true),
+        validateNumber(errorTemperatureReturn, formData["temperature_return"], 0, 200, false, false, true),
+        compareValues(
+            errorTemperatureReturn,
+            formData["temperature_supply"],
+            formData["temperature_return"],
+            "notEqual",
+            "wrongTemperatureCompare"
+        ),
+        validateNumber(errorPower, formData["power"], 0, Infinity, false, false, false),
+        validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
+        validateNumber(errorPipeLength, formData["length"], 0, Infinity, true, false, false),
+        validateNumber(errorLLC, formData["local_loss_coefficient"], 0, Infinity, false, false, false),
+    ].includes(false)
 }
 
-
 export function validatePipesFlowData(formData) {
-    if (
-        [
-            validateIntBetween(formData["temperature"], 0, 200, "wrongTemperature", errorTemperature),
-            validateFloatPositive(formData["flow"], "wrongFlow", errorFlow),
-            validateFloatPositive(formData["roughness"], "wrongRoughness", errorRoughness, 3),
-        ].includes(0)
-    ) {
-        return 0
-    }
-    return 1
+    return [
+        validateNumber(errorTemperature, formData["temperature"], 0, 200, false, false, true),
+        validateNumber(errorFlow, formData["flow"], 0, Infinity, false, false, false),
+        validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
+    ].includes(false)
 }
 
 export function validatePipesPowerData(formData) {
-    if (
-        [
-            validateIntBetween(formData["temperature_supply"], 0, 200, "wrongTemperature", errorTemperatureSupply),
-            validateIntBetween(formData["temperature_return"], 0, 200, "wrongTemperature", errorTemperatureReturn),
-            compareTemperatureValues(
-                formData["temperature_supply"],
-                formData["temperature_return"],
-                "wrongTemperatureCompare",
-                errorTemperatureReturn
-            ),
-            validateFloatPositive(formData["power"], "wrongPower", errorPower),
-            validateFloatPositive(formData["roughness"], "wrongRoughness", errorRoughness, 3),
-        ].includes(0)
-    ) {
-        return 0
-    }
-    return 1
-}
-
-function compareDimenstionsValues(channelDiameter, channelHeight, msgKey, elem) {
-    if (channelDiameter >= channelHeight) {
-        elem.innerHTML = "";
-        return 1
-    }
-    elem.innerHTML = languageWord(msgKey);
-    return 0
+    return [
+        validateNumber(errorTemperatureSupply, formData["temperature_supply"], 0, 200, false, false, true),
+        validateNumber(errorTemperatureReturn, formData["temperature_return"], 0, 200, false, false, true),
+        compareValues(
+            errorTemperatureReturn,
+            formData["temperature_supply"],
+            formData["temperature_return"],
+            "notEqual",
+            "wrongTemperatureCompare"
+        ),
+        validateNumber(errorPower, formData["power"], 0, Infinity, false, false, false),
+        validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
+    ].includes(false)
 }
 
 export function validateManningData(formData) {
     const validationArray = [
-        validateFloatPositive(formData["height"], "wrongHeight", errorHeight),
-        validateFloatPositive(formData["slope"], "wrongChannelSlope", errorSlope),
-        validateFloatPositive(formData["manning_coefficient"], "wrongManningCoefficient", errorManningCoefficient),
+        validateNumber(errorHeight, formData["height"], 0, Infinity, false, false, false),
+        validateNumber(errorSlope, formData["slope"], 0, Infinity, false, false, false),
+        validateNumber(errorManningCoefficient, formData["manning_coefficient"], 0, Infinity, true, false, false),
     ]
     if ("width" in formData) {
-        validationArray.push(validateFloatPositive(formData["width"], "wrongChannelWidth", errorLinearDimension))
+        validationArray.push(validateNumber(errorLinearDimension, formData["width"], 0, Infinity, true, false, false))
     } else if ("diameter" in formData) {
         validationArray.push(
-            validateFloatPositive(formData["diameter"], "wrongChannelDiameter", errorLinearDimension),
-            compareDimenstionsValues(formData["diameter"], formData["height"], "wrongHeightCompare", errorHeight)
+            validateNumber(errorLinearDimension, formData["diameter"], 0, Infinity, true, false, false),
+            compareValues(
+                errorHeight,
+                formData["diameter"],
+                formData["height"],
+                "greaterEqual",
+                "wrongHeightCompare"
+            ),
         )
     }
-    
-    if (validationArray.includes(0)) {
-        return 0
-    }
-    return 1
+    return validationArray.includes(false)
 }

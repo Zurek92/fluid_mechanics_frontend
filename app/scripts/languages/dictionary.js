@@ -36,6 +36,22 @@ export const languageDictionary = {
         "eng": "Selecting pipe dimension based on flow or power.",
         "pl": "Dobór średnicy na podstawie przepływu lub mocy.",
     },
+    "validationNotNumberValue": {
+        "eng": "This value should be a number.",
+        "pl": "Wartość tego pola powinna być liczbą."
+    },
+    "validationValueShouldBeInteger": {
+        "eng": "This value should be an integer.",
+        "pl": "Wartością tego pola powinna być liczba całkowita."
+    },
+    "validationValueTooHigh": {
+        "eng": "This value is too high.",
+        "pl": "Wartość tego pola jest za wysoka."
+    },
+    "validationValueTooLow": {
+        "eng": "This value is too low.",
+        "pl": "Wartość tego pola jest za niska."
+    },
     "Velocity": {"eng": "Velocity", "pl": "Prędkość"},
     "Waiting": {"eng": "Waiting", "pl": "Oczekiwanie"},
     "Width": {"eng": "Width", "pl": "Szerokość"},
@@ -45,53 +61,9 @@ export const languageDictionary = {
     "mainPage": {"eng": "Main Page", "pl": "Strona główna"},
     "materialsArrays": {"eng": ["steel"], "pl": ["stal"]},
     "selectedLanguage": {"eng": 0, "pl": 1},
-    "wrongChannelDiameter": {
-        "eng": "Wrong channel diameter! Should be float higher than 0.",
-        "pl": "Nieprawidłowa średnica kanału! Powinna być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongChannelSlope": {
-        "eng": "Wrong channel slope! Should be float higher than 0.",
-        "pl": "Nieprawidłowy spadek kanału! Powinien być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongChannelWidth": {
-        "eng": "Wrong channel width! Should be float higher than 0.",
-        "pl": "Nieprawidłowa szerokość! Powinna być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongFlow": {
-        "eng": "Wrong flow field! Should be float higher than 0.",
-        "pl": "Nieprawidłowy przepływ! Powinien być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongHeight": {
-        "eng": "Wrong fluid height! Should be float higher than 0.",
-        "pl": "Nieprawidłowa wysokość zwierciadła płynu! Powinna być liczbą zmiennoprzecinkową większą od 0.",
-    },
     "wrongHeightCompare": {
         "eng": "Fluid height should be equal or lower than diameter! Should be float higher than 0.",
         "pl": "Wysokość płynu powinna być mniejsza lub równa średnicy! Powinna być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongLLC": {
-        "eng": "Wrong local loss coefficient field! Should be float higher than or equal 0.",
-        "pl": "Nieprawidłowy współczynnik strat miejscowych! Powinien być liczbą zmiennoprzecinkową większą lub równą 0.",
-    },
-    "wrongLength": {
-        "eng": "Wrong length field! Should be float higher than 0.",
-        "pl": "Nieprawidłowa długość! Powinna być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongManningCoefficient": {
-        "eng": "Wrong Manning coefficient! Should be float higher than 0.",
-        "pl": "Nieprawidłowy wsp. Manninga! Powinien być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongPower": {
-        "eng": "Wrong power field! Should be float higher than 0.",
-        "pl": "Nieprawidłowa moc! Powinna być liczbą zmiennoprzecinkową większą od 0.",
-    },
-    "wrongRoughness": {
-        "eng": "Wrong roughness field! Should be float higher than 0 and much lowest than diameter.",
-        "pl": "Nieprawidłowa chropowatość! Powinna być liczbą zmiennoprzecinkową większą od 0 i znacząco mniejszą od średnicy.",
-    },
-    "wrongTemperature": {
-        "eng": "Wrong temperature field! Should be integer between 0-200.",
-        "pl": "Nieprawidłowa temperatura! Powinna być liczbą całkowitą pomiędzy 0 a 200.",
     },
     "wrongTemperatureCompare": {
         "eng": "Temperature supply and return couldn't have the same values.",

@@ -7,7 +7,7 @@ export function fetchData(url, formData, funcValidate, funcShowResp) {
         // fetching data in progress
         return 0
     }
-    if (!funcValidate(formData)) {
+    if (funcValidate(formData)) {
         // wrong form
         return 0
     }
