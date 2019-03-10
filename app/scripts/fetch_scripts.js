@@ -1,8 +1,7 @@
 import { languageDictionary } from './languages/dictionary.js';
 import { languageWord } from './languages/language_options.js';
 import {
-    generateHeadlossFlowForm,
-    generateHeadlossPowerForm,
+    generateHeadlossForm,
     generatePipesFlowForm,
     generatePipesPowerForm,
     generateManningForm
@@ -24,8 +23,6 @@ function buttonEnable() {
 // listeners
 function headlossListeners(
     url,
-    flowFormFunc,
-    powerFormFunc,
     flowData,
     powerData,
     validateFlow,
@@ -34,12 +31,12 @@ function headlossListeners(
 ) {
     calcMode.addEventListener("change", () => {
         if (calcMode.value == languageWord("KnownFlow")) {
-            optionsForm.innerHTML = flowFormFunc();
+            optionsForm.innerHTML = generateHeadlossForm("flow");
             document.querySelector("form > button").addEventListener("click", () => {
                 fetchData(url, flowData(), validateFlow, funcShowResp)
             });
         } else if (calcMode.value == languageWord("KnownPower")) {
-            optionsForm.innerHTML = powerFormFunc();
+            optionsForm.innerHTML = generateHeadlossForm("power");
             document.querySelector("form > button").addEventListener("click", () => {
                 fetchData(url, powerData(), validatePower, funcShowResp)
             });
@@ -343,7 +340,6 @@ function fetchData(url, formData, funcValidate, funcShowResp) {
 export { manningListeners };
 export { headlossListeners };
 
-export { generateHeadlossFlowForm, generateHeadlossPowerForm };
 export { getHeadlossFlowData, getHeadlossPowerData };
 export { validateHeadlossFlowData, validateHeadlossPowerData };
 export { headlossShowResponse };

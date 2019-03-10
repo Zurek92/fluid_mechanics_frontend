@@ -52,16 +52,38 @@ function generateInputOption(idElement, label, defaultValue) {
     `
 }
 
-function generateHeadlossFlowForm() {
+export function generateHeadlossForm(mode) {
+    let temperatureFields;
+    let calculateMode;
+    if (mode == "flow") {
+        temperatureFields = `
+            ${generateInputOption('temperature', "Temperature", "")}
+            <div id="errorTemperature" class="errorMessage"></div>
+        `
+        calculateMode = `
+            ${generateInputOption('flow', "Flow", "")}
+            <div id="errorFlow" class="errorMessage"></div>
+            ${generateSelectOption('flow_unit', "FlowUnit", flowUnitArray)}
+        `
+    } else if (mode == "power") {
+        temperatureFields = `
+            ${generateInputOption('temperature_supply', "TemperatureSupply", "")}
+            <div id="errorTemperatureSupply" class="errorMessage"></div>
+            ${generateInputOption('temperature_return', "TemperatureReturn", "")}
+            <div id="errorTemperatureReturn" class="errorMessage"></div>
+        `
+        calculateMode = `
+            ${generateInputOption('power', "Power", "")}
+            <div id="errorPower" class="errorMessage"></div>
+            ${generateSelectOption('power_unit', "PowerUnit", powerUnitArray)}
+        `
+    }
     return `
         ${generateSelectOption('fluid', "Fluid", languageWord("fluidsArrays"))}
-        ${generateInputOption('temperature', "Temperature", "")}
-        <div id="errorTemperature" class="errorMessage"></div>
+        ${temperatureFields}
         ${generateSelectOption('material', "Material", languageWord("materialsArrays"))}
         ${generateSelectOption('nominal_diameter', "NominalDiameter", nominalDiameterArray)}
-        ${generateInputOption('flow', "Flow", "")}
-        <div id="errorFlow" class="errorMessage"></div>
-        ${generateSelectOption('flow_unit', "FlowUnit", flowUnitArray)}
+        ${calculateMode}
         ${generateInputOption('pipe_length', "PipeLength", "")}
         <div id="errorPipeLength" class="errorMessage"></div>
         ${generateInputOption('roughness', "Roughness", "1.5")}
@@ -73,28 +95,6 @@ function generateHeadlossFlowForm() {
     `
 }
 
-function generateHeadlossPowerForm() {
-    return `
-        ${generateSelectOption('fluid', "Fluid", languageWord("fluidsArrays"))}
-        ${generateInputOption('temperature_supply', "TemperatureSupply", "")}
-        <div id="errorTemperatureSupply" class="errorMessage"></div>
-        ${generateInputOption('temperature_return', "TemperatureReturn", "")}
-        <div id="errorTemperatureReturn" class="errorMessage"></div>
-        ${generateSelectOption('material', "Material", languageWord("materialsArrays"))}
-        ${generateSelectOption('nominal_diameter', "NominalDiameter", nominalDiameterArray)}
-        ${generateInputOption('power', "Power", "")}
-        <div id="errorPower" class="errorMessage"></div>
-        ${generateSelectOption('power_unit', "PowerUnit", powerUnitArray)}
-        ${generateInputOption('pipe_length', "PipeLength", "")}
-        <div id="errorPipeLength" class="errorMessage"></div>
-        ${generateInputOption('roughness', "Roughness", "1.5")}
-        <div id="errorRoughness" class="errorMessage"></div>
-        ${generateInputOption('local_loss_coefficient', "LocalLossCoefficient", "0")}
-        <div id="errorLLC" class="errorMessage"></div>
-        ${generateSelectOption('headloss_unit', "HeadlossUnit", headlossUnitArray)}
-        <button type="button" id="formButton">${languageWord("Calculate")}</button>
-    `
-}
 
 function generatePipesFlowForm() {
     return `
@@ -150,8 +150,6 @@ function generateManningForm() {
 }
 
 export {
-    generateHeadlossFlowForm,
-    generateHeadlossPowerForm,
     generatePipesFlowForm,
     generatePipesPowerForm,
     generateManningForm,
