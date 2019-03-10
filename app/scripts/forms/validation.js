@@ -54,17 +54,14 @@ function compareValues(elemId, value1, value2, mode, msgKey) {
     return compare;
 }
 
-export function validateHeadlossFlowData(formData) {
+function validateFlowValues(formData) {
     return [
         validateNumber(errorTemperature, formData["temperature"], 0, 200, false, false, true),
         validateNumber(errorFlow, formData["flow"], 0, Infinity, false, false, false),
-        validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
-        validateNumber(errorPipeLength, formData["length"], 0, Infinity, true, false, false),
-        validateNumber(errorLLC, formData["local_loss_coefficient"], 0, Infinity, false, false, false),
-    ].includes(false)
+    ]
 }
 
-export function validateHeadlossPowerData(formData) {
+function validatePowerValues(formData) {
     return [
         validateNumber(errorTemperatureSupply, formData["temperature_supply"], 0, 200, false, false, true),
         validateNumber(errorTemperatureReturn, formData["temperature_return"], 0, 200, false, false, true),
@@ -76,34 +73,38 @@ export function validateHeadlossPowerData(formData) {
             "wrongTemperatureCompare"
         ),
         validateNumber(errorPower, formData["power"], 0, Infinity, false, false, false),
+    ]
+}
+
+function validateRoughnessValue(formData) {
+    return [
         validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
+    ]
+}
+
+function validatePipeSystemValues(formData) {
+    return [
         validateNumber(errorPipeLength, formData["length"], 0, Infinity, true, false, false),
         validateNumber(errorLLC, formData["local_loss_coefficient"], 0, Infinity, false, false, false),
-    ].includes(false)
+    ]
 }
 
-export function validatePipesFlowData(formData) {
-    return [
-        validateNumber(errorTemperature, formData["temperature"], 0, 200, false, false, true),
-        validateNumber(errorFlow, formData["flow"], 0, Infinity, false, false, false),
-        validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
-    ].includes(false)
-}
-
-export function validatePipesPowerData(formData) {
-    return [
-        validateNumber(errorTemperatureSupply, formData["temperature_supply"], 0, 200, false, false, true),
-        validateNumber(errorTemperatureReturn, formData["temperature_return"], 0, 200, false, false, true),
-        compareValues(
-            errorTemperatureReturn,
-            formData["temperature_supply"],
-            formData["temperature_return"],
-            "notEqual",
-            "wrongTemperatureCompare"
-        ),
-        validateNumber(errorPower, formData["power"], 0, Infinity, false, false, false),
-        validateNumber(errorRoughness, formData["roughness"], 0, 3, true, false, false),
-    ].includes(false)
+export function validateHeadlossData(formData, flowMode, formMode) {
+    const validateData = [
+        validateRoughnessValue(formData),
+    ];
+    switch(flowMode) {
+        case "flow":
+            validateData.push(...validateFlowValues(formData));
+            break;
+        case "power":
+            validateData.push(...validatePowerValues(formData));
+            break;
+    }
+    if (formMode == "headloss") {
+        validateData.push(...validatePipeSystemValues(formData));
+    }
+    return validateData.includes(false);
 }
 
 export function validateManningData(formData) {

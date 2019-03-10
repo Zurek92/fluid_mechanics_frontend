@@ -17,20 +17,22 @@ export function headlossListeners(
     url,
     template,
     jsonData,
-    validateFlow,
-    validatePower,
+    validateData,
     funcShowResp
 ) {
     calcMode.addEventListener("change", () => {
+        let formData;
         if (calcMode.value == languageWord("KnownFlow")) {
             optionsForm.innerHTML = generateHeadlossForm("flow", template);
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData(url, jsonData("flow", template), validateFlow, funcShowResp)
+                formData = jsonData("flow", template);
+                fetchData(url, formData, validateData(formData, "flow", template), funcShowResp)
             });
         } else if (calcMode.value == languageWord("KnownPower")) {
             optionsForm.innerHTML = generateHeadlossForm("power", template);
             document.querySelector("form > button").addEventListener("click", () => {
-                fetchData(url, jsonData("power", template), validatePower, funcShowResp)
+                formData = jsonData("power", template);
+                fetchData(url, formData, validateData(formData, "power", template), funcShowResp)
             });
         }
     })
