@@ -13,28 +13,23 @@ export function buttonEnable() {
     formButton.innerHTML = languageWord("Calculate");
 }
 
-export function headlossListeners(
-    url,
-    template,
-    jsonData,
-    validateData,
-    funcShowResp
-) {
+export function headlossListeners(url, template, jsonData, validateData, funcShowResp) {
     calcMode.addEventListener("change", () => {
         let formData;
-        if (calcMode.value == languageWord("KnownFlow")) {
-            optionsForm.innerHTML = generateHeadlossForm("flow", template);
-            document.querySelector("form > button").addEventListener("click", () => {
-                formData = jsonData("flow", template);
-                fetchData(url, formData, validateData(formData, "flow", template), funcShowResp)
-            });
-        } else if (calcMode.value == languageWord("KnownPower")) {
-            optionsForm.innerHTML = generateHeadlossForm("power", template);
-            document.querySelector("form > button").addEventListener("click", () => {
-                formData = jsonData("power", template);
-                fetchData(url, formData, validateData(formData, "power", template), funcShowResp)
-            });
+        let flowMode;
+        switch(calcMode.value) {
+            case languageWord("KnownFlow"):
+                flowMode = "flow";
+                break;
+            case languageWord("KnownPower"):
+                flowMode = "power";
+                break;
         }
+        optionsForm.innerHTML = generateHeadlossForm(flowMode, template);
+        document.querySelector("form > button").addEventListener("click", () => {
+            formData = jsonData(flowMode, template);
+            fetchData(url, formData, validateData(formData, flowMode, template), funcShowResp);
+        })
     })
 }
 
