@@ -19,15 +19,17 @@ export function manningShowResponse(resp) {
 }
 
 export function pipesShowResponse(resp) {
-    let internalTable = '';
+    const internalTable = [];
     for (let diameterResult of resp["results"]) {
-        internalTable += `
-        <tr>
-            <td>${diameterResult["nominal_diameter"]}</td>
-            <td>${diameterResult["headloss"]}</td>
-            <td>${diameterResult["velocity"]}</td>
-        </tr>
-        `
+        internalTable.push(
+            `
+            <tr>
+                <td>${diameterResult["nominal_diameter"]}</td>
+                <td>${diameterResult["headloss"]}</td>
+                <td>${diameterResult["velocity"]}</td>
+            </tr>
+            `
+        )
     }
     return results.innerHTML = `
         <table>
@@ -36,7 +38,7 @@ export function pipesShowResponse(resp) {
                 <th>${languageWord("Headloss")} [${resp["headloss_unit"]}]</th>
                 <th>${languageWord("Velocity")} [${resp["velocity_unit"]}]</th>
             </tr>
-            ${internalTable}
+            ${internalTable.join("\n")}
         </table>
     `
 }
