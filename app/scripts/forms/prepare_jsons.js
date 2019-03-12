@@ -86,9 +86,9 @@ export function getHeadlossData(flowMode, formMode) {
 
 export function getManningData() {
     let slope = parseFloat(channelSlope.value.replace(',', '.'));
-    if (slopeUnit.value == '%') {
+    if (slope_unit.value == '%') {
         slope /= 100;
-    } else if (slopeUnit.value == '‰') {
+    } else if (slope_unit.value == '‰') {
         slope /= 1000;
     }
     

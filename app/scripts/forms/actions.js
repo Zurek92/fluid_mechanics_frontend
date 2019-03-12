@@ -1,6 +1,6 @@
 import { fetchData } from '../api_interaction/fetch_api.js'
 import { manningShowResponse } from '../api_interaction/responses.js'
-import { saveFormValues, loadFormValues } from '../cookies/preferences.js'
+import { addPermCookie, saveFormValues, loadFormValues } from '../cookies/preferences.js'
 import { generateHeadlossForm, generateManningForm } from '../forms/forms.js'
 import { getManningData } from '../forms/prepare_jsons.js'
 import { validateManningData } from '../forms/validation.js'
@@ -42,7 +42,7 @@ export function manningListeners() {
         loadFormValues();
         document.querySelector("form > button").addEventListener("click", () => {
             let formData = getManningData();
-            saveFormValues(formData);
+            addPermCookie("slope_unit", slope_unit.value);
             fetchData("/calculate/gravity_flow", formData, validateManningData(formData), manningShowResponse);
         });
     })

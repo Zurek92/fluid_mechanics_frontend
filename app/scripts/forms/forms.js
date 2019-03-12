@@ -131,7 +131,7 @@ export function generateManningForm() {
         <div id="errorHeight" class="errorMessage"></div>
         ${generateInputOption('channelSlope', "Slope", "")}
         <div id="errorSlope" class="errorMessage"></div>
-        ${generateSelectOption('slopeUnit', "SlopeUnit", slopeUnitArray)}
+        ${generateSelectOption('slope_unit', "SlopeUnit", slopeUnitArray)}
         ${generateInputOption('manningCoefficient', "ManningCoefficient", 0.013)}
         <div id="errorManningCoefficient" class="errorMessage"></div>
         <button type="button" id="formButton">${languageWord("Calculate")}</button>
