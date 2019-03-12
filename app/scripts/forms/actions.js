@@ -1,9 +1,10 @@
+import { fetchData } from '../api_interaction/fetch_api.js'
 import { manningShowResponse } from '../api_interaction/responses.js'
-import { languageWord } from '../languages/language_options.js';
+import { saveFormValues, loadFormValues } from '../cookies/preferences.js'
 import { generateHeadlossForm, generateManningForm } from '../forms/forms.js'
 import { getManningData } from '../forms/prepare_jsons.js'
 import { validateManningData } from '../forms/validation.js'
-import { fetchData } from '../api_interaction/fetch_api.js'
+import { languageWord } from '../languages/language_options.js'
 
 export function buttonDisable() {
     formButton.innerHTML = languageWord("Waiting");
@@ -26,8 +27,10 @@ export function headlossListeners(url, template, jsonData, validateData, funcSho
                 break;
         }
         optionsForm.innerHTML = generateHeadlossForm(flowMode, template);
+        loadFormValues();
         document.querySelector("form > button").addEventListener("click", () => {
             formData = jsonData(flowMode, template);
+            saveFormValues(formData);
             fetchData(url, formData, validateData(formData, flowMode, template), funcShowResp);
         })
     })
@@ -36,8 +39,11 @@ export function headlossListeners(url, template, jsonData, validateData, funcSho
 export function manningListeners() {
     shapeMode.addEventListener("change", () => {
         optionsForm.innerHTML = generateManningForm();
+        loadFormValues();
         document.querySelector("form > button").addEventListener("click", () => {
-            fetchData("/calculate/gravity_flow", getManningData(), validateManningData, manningShowResponse)
+            let formData = getManningData();
+            saveFormValues(formData);
+            fetchData("/calculate/gravity_flow", formData, validateManningData(formData), manningShowResponse);
         });
     })
 }
