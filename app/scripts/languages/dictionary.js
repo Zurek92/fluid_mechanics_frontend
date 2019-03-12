@@ -1,7 +1,18 @@
 export const languageDictionary = {
+    "acceptButton": {"eng": "Accept", "pl": "Akceptuj"},
     "Calculate": {"eng": "Calculate", "pl": "Oblicz"},
     "ChooseMode": {"eng": "Choose mode", "pl": "Wybierz rodzaj"},
     "ChooseShape": {"eng": "Choose channel shape", "pl": "Wybierz kształt kanału"},
+    "cookiesBlocked": {
+        "eng": "Cookies are disabled, some functionality may be disabled.", 
+        "pl": "Ciasteczka są zablokowane, niektóre funkcjonalności strony mogą nie działać."},
+    "cookiesInfo": {
+        "eng": "This website uses cookies to improve service. By using this site, you agree to this use. \
+        No data is sent to the server but setting user preferences by a web browser such as language.",
+        "pl": "Ta strona używa ciasteczek dla poprawy komfortu. Korzystając z niej wyrażasz na to zgodę. \
+        Żadne dane nie są wysyłane na serwer a służą jedynie ustawianiu preferencji użytkownika przez przeglądarkę \
+        takich jak np. język."
+    },
     "Diameter": {"eng": "Diameter", "pl": "Średnica"},
     "Flow": {"eng": "Flow", "pl": "Przepływ"},
     "FlowUnit": {"eng": "Flow unit", "pl": "Jednostka przepływu"},

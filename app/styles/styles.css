@@ -103,3 +103,19 @@ select, input {
 .panel > div > form > select {
     width: 130px;
 }
+
+.cookiesInfoLabel {
+    position: fixed;
+    left: 0;
+    bottom: 20px;
+    width: 100%;
+    background-color: rgba(12, 34, 56, 0.7);
+    text-align: center;
+    padding: 20px;
+}
+
+.cookiesInfoLabel > button {
+    padding: 7px;
+    margin-right: 10px;
+    cursor: pointer;
+}
